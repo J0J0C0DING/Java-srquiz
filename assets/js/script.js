@@ -1,59 +1,60 @@
-let score = 0;
+let startButton = document.querySelector("#start-btn");
+let quizEl = document.querySelector(".quizContent");
+let introEl = document.querySelector(".intro");
+let questionEl = document.querySelector(".question");
 
-let questions = {
-  q1: "Example Question 1",
-  q2: "Example Question 2",
-  q3: "Example Question 3",
-};
+let currentQuestion = 0;
 
-let options = {
-  a1: {
-    option1: "Wrong Answer",
-    option2: "Wrong Answer",
-    option3: "Correct Answer",
-    option4: "Wrong Answer",
+const questions = [
+  {
+    question: "Why is Javascript so hard?",
+    answers: [
+      { option: "Do better", correct: true },
+      { option: "You suck", correct: false },
+    ],
   },
+];
 
-  a2: {
-    option1: "Wrong Answer",
-    option2: "Wrong Answer",
-    option3: "Correct Answer",
-    option4: "Wrong Answer",
-  },
-};
-
-let startQuiz = document.querySelector("button");
-
-startQuiz.addEventListener("click", function () {
-  let intro = document.querySelector(".intro");
-  intro.classList.add("hide");
-  quizHolder();
-  console.log(intro);
+startButton.addEventListener("click", function () {
+  console.log("Start Quiz");
+  introEl.classList.add("hide");
+  nextQuestion();
 });
 
-let quizHolder = function (event) {
-  // create div to hold quiz
-  let holder = document.createElement("div");
-  holder.classList.add("quiz-holder");
+function nextQuestion() {
+  showQuestion(questions[currentQuestion]);
+}
 
-  // create title
-  let questionTitle = document.createElement("h2");
-  questionTitle.textContent = `${questions.q1}`;
+function showQuestion(question) {
+  questionEl.innerText = question.question;
+  question.answers.forEach((answer) => {
+    let option = document.createElement("li");
+    option.innerText = answer.text;
+    if (answer.correct) {
+      option.dataset.correct = option.correct;
+    }
+    option.addEventListener("click", selectAnswer);
+    quizEl.appendChild(option);
+  });
+}
 
-  // create unordered list
-  let optionHolder = document.createElement("ul");
+function selectAnswer(event) {}
 
-  holder.appendChild(questionTitle, optionHolder);
+// let generateQuiz = function () {
+//   // Set question title
+//   let questionTitle = document.createElement("h2");
+//   questionTitle.textContent = "exampleQuestion";
+//   questionTitle.setAttribute("id", "question-title");
 
-  // Create new li for each option
-  for (let i = 0; i < Object.keys(options.a1).length; i++) {
-    let optionText = Object.values(options.a1)[i];
-    let newOption = document.createElement("li");
-    newOption.textContent = optionText;
-    newOption.setAttribute("answer", i);
-    holder.appendChild(newOption);
-  }
+//   // Create unordered list
+//   let questionList = document.createElement("ul");
 
-  // apphend to main
-  document.querySelector("main").appendChild(holder);
-};
+//   // Add answer options
+//   let options = document.createElement("li");
+//   options.textContent = "Example Answer";
+//   questionList.appendChild(options);
+
+//   quizEl.appendChild(questionTitle);
+
+//   quizEl.appendChild(questionList);
+// };

@@ -17,11 +17,7 @@ button {
   padding: 10px;
 }
 
-.hide {
-  display: none;
-}
-
-.quiz-holder {
+.quizContent {
   display: block;
   padding: 10px;
   width: 50%;
@@ -30,9 +26,21 @@ button {
 
 li {
   list-style: none;
-  margin-bottom: 15px;
   background-color: blueviolet;
+  width: 50%;
+  margin: 10px;
+  padding: 25px 10px 25px 25px;
   color: white;
-  width: fit-content;
-  padding: 10px;
+}
+
+li:hover {
+  background-color: #5e2593;
+}
+
+ul {
+  padding: 0;
+}
+
+.hide {
+  display: none;
 }
