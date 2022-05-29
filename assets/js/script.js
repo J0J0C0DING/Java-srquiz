@@ -1,14 +1,23 @@
-let score = 0;
-let userInitials;
+// User scores
+let highScores = [];
+let userInitials = [];
+
+// Set score variable
+let score;
 
 let startButton = document.querySelector("#start-btn");
 let quizEl = document.querySelector(".quizContent");
 let introEl = document.querySelector(".intro");
 let questionEl = document.querySelector(".question");
+let highscoresEl = document.querySelector(".highscores");
 
-let currentQuestion = 0;
+let currentQuestion;
 
-// Object array of options
+let scoreForm = document.querySelector(".scoreForm");
+
+let timeLeft;
+
+// Object array of questions
 const questions = [
   {
     question: "Why is Javascript so hard?",
@@ -31,15 +40,31 @@ const questions = [
 ];
 
 let quizTracker = questions.length;
-console.log(quizTracker);
 
 // When start button is clicked
 startButton.addEventListener("click", function () {
+  timeLeft = 20;
+  score = 0;
+  currentQuestion = 0;
   console.log("Start Quiz");
   // Hide intro information
   introEl.classList.add("hide");
   // Start next question
   nextQuestion();
+
+  // Start Timer
+  var timer = setInterval(function () {
+    timeLeft--;
+    if (timeLeft === 0) {
+      clearInterval(timer);
+      quizEl.classList.add("hide");
+      scoreForm.classList.remove("hide");
+      alert("You've run out of time!");
+    } else if (currentQuestion === questions.length) {
+      clearInterval(timer);
+    }
+    console.log(timeLeft);
+  }, 1000);
 });
 
 // Take questions array and select current question and move onto show question function
@@ -78,8 +103,7 @@ function selectAnswer(event) {
     score += 1;
     console.log("score:", score);
   } else {
-    // decrease time by 10
-    // insert timer decrease here
+    timeLeft = timeLeft - 5;
   }
 
   currentQuestion++;
@@ -88,6 +112,34 @@ function selectAnswer(event) {
   if (currentQuestion < quizTracker) {
     nextQuestion();
   } else {
+    let finalScore = scoreForm.querySelector("#scoreHolder");
+    finalScore.textContent = `Score: ${score}`;
+    scoreForm.classList.remove("hide");
+
     console.log("end of quiz");
   }
 }
+
+let submitBtn = document.getElementById("submit-btn");
+
+submitBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  let userInput = document.getElementById("userInitials").value;
+  let newSavedScore = {
+    score: score,
+    userName: userInput,
+  };
+
+  //Followed Youtube Video https://bit.ly/3LWvhPl to figure out local storage/sorting scores
+  highScores.push(newSavedScore);
+
+  highScores.sort((a, b) => b.score - a.score);
+
+  highScores.splice(5);
+
+  console.log(highScores);
+
+  localStorage.setItem("highscores", JSON.stringify(highScores));
+  introEl.classList.remove("hide");
+  scoreForm.classList.add("hide");
+});
