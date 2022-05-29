@@ -1,5 +1,4 @@
 // User scores
-let highScores = [];
 let userInitials = [];
 
 // Set score variable
@@ -130,7 +129,20 @@ submitBtn.addEventListener("click", function (e) {
     userName: userInput,
   };
 
+  setScores(newSavedScore);
   //Followed Youtube Video https://bit.ly/3LWvhPl to figure out local storage/sorting scores
+
+  introEl.classList.remove("hide");
+  scoreForm.classList.add("hide");
+});
+
+// Referenced http://jsfiddle.net/Bxn2t/1/ to pull entries and resave new ones
+let setScores = function (newSavedScore) {
+  let highScores = JSON.parse(localStorage.getItem("highScores"));
+  if (highScores === null) {
+    highScores = [];
+  }
+
   highScores.push(newSavedScore);
 
   highScores.sort((a, b) => b.score - a.score);
@@ -139,7 +151,5 @@ submitBtn.addEventListener("click", function (e) {
 
   console.log(highScores);
 
-  localStorage.setItem("highscores", JSON.stringify(highScores));
-  introEl.classList.remove("hide");
-  scoreForm.classList.add("hide");
-});
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+};
