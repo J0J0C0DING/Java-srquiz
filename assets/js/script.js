@@ -20,24 +20,55 @@ let scoreForm = document.querySelector(".scoreForm");
 
 let timeLeft;
 
+// Questions pulled from w3schools JavaScript Quiz
 // Object array of questions
 const questions = [
   {
-    question: "Why is Javascript so hard?",
+    question: "How do you call a function named 'myFunction'",
     answers: [
-      { option: "Do better", correct: true },
-      { option: "You suck", correct: false },
-      { option: "Happy Birthday", correct: false },
-      { option: "Lets finish this", correct: false },
+      { option: "myFunction()", correct: true },
+      { option: "call myFunction()", correct: false },
+      { option: "call function myFunction()", correct: false },
     ],
   },
   {
-    question: "This is getting easier?",
+    question: "How can you add a comment in a JavaScript",
     answers: [
-      { option: "Maybe", correct: true },
-      { option: "Who knows", correct: false },
-      { option: "Definetly", correct: false },
-      { option: "Let me die", correct: false },
+      { option: "//This is a comment", correct: true },
+      { option: "'This is a comment", correct: false },
+      { option: "*** This is a comment ***", correct: false },
+    ],
+  },
+  {
+    question: `What is the correct syntax for referring to an internal script class "xxx.js"`,
+    answers: [
+      { option: `script src = "xxx.js"`, correct: true },
+      { option: `script name = "xxx.js"`, correct: false },
+      { option: `script href = "xxx.js"`, correct: false },
+    ],
+  },
+  {
+    question: "The external JavaScript must contain the <script> tag",
+    answers: [
+      { option: "True", correct: false },
+      { option: "False", correct: true },
+    ],
+  },
+  {
+    question: `How do you write "Hello World" in an alert box?`,
+    answers: [
+      { option: `alertBox("Hello World)`, correct: false },
+      { option: `alert("Hello World"`, correct: true },
+      { option: `msg("Hello World)`, correct: false },
+      { option: `msgBox("Hello World)`, correct: false },
+    ],
+  },
+  {
+    question: "How do you create a function in JavaScript",
+    answers: [
+      { option: "function:myFunction()", correct: false },
+      { option: "function = myFunction()", correct: false },
+      { option: "function myFunction()", correct: true },
     ],
   },
 ];
