@@ -1,13 +1,19 @@
-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
 }
 
-.intro {
-  text-align: center;
-  width: 50%;
-  margin: 0 auto;
+h1,
+h2 {
+  font-weight: 700;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  font-size: 20px;
 }
 
 button {
@@ -15,13 +21,6 @@ button {
   background-color: blueviolet;
   border-style: none;
   padding: 10px;
-}
-
-.quizContent {
-  display: block;
-  padding: 10px;
-  width: 50%;
-  margin: 0 auto;
 }
 
 li {
@@ -56,4 +55,47 @@ form {
 input {
   display: block;
   margin: 25px auto;
+}
+
+.intro {
+  text-align: center;
+}
+
+.quizContent {
+  display: block;
+  padding: 10px;
+}
+
+.intro,
+.quizContent,
+.highscores {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.scoreList {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.highscores {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.scoreList li {
+  width: 100%;
+  padding: 25px 10px 25px 25px;
+  color: white;
+  text-align: left;
+  margin: 0px;
+}
+
+.scoreList {
+  margin-bottom: 25px;
+}
+
+a {
+  text-decoration: none;
+  color: #5e2593;
 }

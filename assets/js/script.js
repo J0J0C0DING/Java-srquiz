@@ -1,14 +1,18 @@
 // User scores
 let userInitials = [];
+let highScores = JSON.parse(localStorage.getItem("highScores"));
 
 // Set score variable
 let score;
 
-let startButton = document.querySelector("#start-btn");
-let quizEl = document.querySelector(".quizContent");
-let introEl = document.querySelector(".intro");
-let questionEl = document.querySelector(".question");
-let highscoresEl = document.querySelector(".highscores");
+const startButton = document.querySelector("#start-btn");
+const quizEl = document.querySelector(".quizContent");
+const introEl = document.querySelector(".intro");
+const questionEl = document.querySelector(".question");
+const highscoresEl = document.querySelector(".highscores");
+const scoreListEl = document.querySelector(".scoreList");
+const restartBtn = document.querySelector(".play-again-btn");
+const timerEl = document.querySelector(".timer");
 
 let currentQuestion;
 
@@ -58,10 +62,11 @@ startButton.addEventListener("click", function () {
       clearInterval(timer);
       quizEl.classList.add("hide");
       scoreForm.classList.remove("hide");
-      alert("You've run out of time!");
     } else if (currentQuestion === questions.length) {
       clearInterval(timer);
     }
+
+    timerEl.innerHTML = `Time: ${timeLeft}`;
     console.log(timeLeft);
   }, 1000);
 });
@@ -99,10 +104,11 @@ function selectAnswer(event) {
   let selection = event.target.getAttribute("data-correct");
   // Add one to score
   if (selection === "true") {
-    score += 1;
+    score += 10;
     console.log("score:", score);
   } else {
-    timeLeft = timeLeft - 5;
+    score -= 5;
+    timeLeft -= 5;
   }
 
   currentQuestion++;
@@ -114,8 +120,6 @@ function selectAnswer(event) {
     let finalScore = scoreForm.querySelector("#scoreHolder");
     finalScore.textContent = `Score: ${score}`;
     scoreForm.classList.remove("hide");
-
-    console.log("end of quiz");
   }
 }
 
@@ -130,26 +134,66 @@ submitBtn.addEventListener("click", function (e) {
   };
 
   setScores(newSavedScore);
-  //Followed Youtube Video https://bit.ly/3LWvhPl to figure out local storage/sorting scores
 
-  introEl.classList.remove("hide");
   scoreForm.classList.add("hide");
+  highscoresEl.classList.remove("hide");
 });
 
 // Referenced http://jsfiddle.net/Bxn2t/1/ to pull entries and resave new ones
 let setScores = function (newSavedScore) {
-  let highScores = JSON.parse(localStorage.getItem("highScores"));
+  // Set array to empty if no local storage
   if (highScores === null) {
     highScores = [];
   }
-
+  // Push new object to highscore array
   highScores.push(newSavedScore);
 
+  //Followed Youtube Video https://bit.ly/3LWvhPl to figure out local storage/sorting scores
   highScores.sort((a, b) => b.score - a.score);
 
+  // Limit list to set amount of objects
   highScores.splice(5);
 
-  console.log(highScores);
-
+  // Update local storage with updated scores
   localStorage.setItem("highScores", JSON.stringify(highScores));
+
+  scorePage();
 };
+
+let scorePage = function () {
+  if (highScores) {
+    scoreListEl.innerHTML = highScores
+      .map((score) => {
+        return `<li> ${score.userName}: ${score.score}</li>`;
+      })
+      .join("");
+  }
+};
+
+scorePage();
+
+// Clear Scores
+let clearScores = document.querySelector(".clear-scores");
+
+clearScores.addEventListener("click", function () {
+  highScores = [];
+  localStorage.removeItem("highScores");
+  scoreListEl.innerHTML = "";
+});
+
+// Play again
+restartBtn.addEventListener("click", function () {
+  introEl.classList.remove("hide");
+  highscoresEl.classList.add("hide");
+  timerEl.innerHTML = "";
+});
+
+// Jump to highscores
+let showHighScores = document.querySelector(".jump-to-highscores");
+showHighScores.addEventListener("click", function () {
+  introEl.classList.add("hide");
+  questionEl.innerHTML = "";
+  highscoresEl.classList.remove("hide");
+  scoreForm.classList.add("hide");
+  timeLeft = 0;
+});

@@ -11,10 +11,10 @@
 <body>
   <header>
     <div>
-      <a href="#">Highscores</a>
+      <a class="jump-to-highscores" href="#">Highscores</a>
     </div>
     <div class="timer">
-      Timer
+      
     </div>
   </header>
   <main>
@@ -36,8 +36,18 @@
         <button type="submit" id="submit-btn">Submit</button>
       </form>
     </div>
-    <div class="highscores">
-      <h1>Highscores</h1>
+    <div class="highscores hide">
+      <div><h1>Highscores</h1></div>
+      
+      <div>
+        <ul class="scoreList">
+
+        </ul>
+      </div>
+      <div class="buttonGroup">
+        <button class="clear-scores">Clear High Scores</button>
+        <button class="play-again-btn">Play Again</button>
+      </div>
     </div>
   </main>
 
